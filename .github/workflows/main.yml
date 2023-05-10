@@ -13,6 +13,11 @@ jobs:
       - name: Clonar repositorio
         uses: actions/checkout@v2
       
+      - name: Crear directorio .ssh y archivo known_hosts
+        run: |
+          mkdir -p $HOME/.ssh
+          touch $HOME/.ssh/known_hosts
+      
       - name: Eliminar clave del host SSH
         run: |
           ssh-keygen -R 34.203.206.54 >> $HOME/.ssh/known_hosts
@@ -25,6 +30,3 @@ jobs:
           ssh -i key.pem Admin@34.203.206.54 'rm -rf /ruta/al/repo'
           ssh -i key.pem Admin@34.203.206.54 'git clone https://github.com/fmgarciaa/demo_flow.git'
           ssh -i key.pem Admin@34.203.206.54 'cd /ruta/al/repo && docker-compose up -d'
-
-
-
