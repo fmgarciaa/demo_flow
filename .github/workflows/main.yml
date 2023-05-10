@@ -15,12 +15,12 @@ jobs:
       
       - name: Iniciar instancia EC2
         run: |
-          echo "${{ secrets.clave_privada_ec2 }}" > key.pem
+          echo "${{ secrets.CLAVE_PRIVADA_EC2 }}" > key.pem
           chmod 600 key.pem
-          ssh -i key.pem ec2-user@34.203.206.54 'docker-compose up -d'
+          ssh -i key.pem Admin@34.203.206.54 'docker-compose up -d'
 
       - name: Pruebas de integración
         run: |
-          echo "${{ secrets.clave_privada_ec2 }}" > key.pem
+          echo "${{ secrets.CLAVE_PRIVADA_EC2 }}" > key.pem
           chmod 600 key.pem
-          ssh -i key.pem ec2-user@34.203.206.54 'docker-compose run app npm test'
+          ssh -i key.pem Admin@34.203.206.54 'docker-compose run app npm test'
