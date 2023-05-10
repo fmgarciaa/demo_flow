@@ -15,7 +15,7 @@ jobs:
         
       - name: Iniciar instancia EC2
         run: |
-          echo "${{ secrets.CLAVE_PRIVADA_EC2 }}" > key.pem
+          echo "${{ secrets.CLAVEPRIVADAEC2 }}" > key.pem
           chmod 600 key.pem
           ssh -i key.pem Admin@34.203.206.54 'docker-compose down'
           ssh -i key.pem Admin@34.203.206.54 'rm -rf /ruta/al/repo'
