@@ -1,0 +1,26 @@
+name: CI/CD para aplicación en Docker
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v2
+      
+      - name: Iniciar instancia EC2
+        run: |
+          echo "${{ secrets.clave_privada_ec2 }}" > key.pem
+          chmod 600 key.pem
+          ssh -i key.pem ec2-user@34.203.206.54 'docker-compose up -d'
+
+      - name: Pruebas de integración
+        run: |
+          echo "${{ secrets.clave_privada_ec2 }}" > key.pem
+          chmod 600 key.pem
+          ssh -i key.pem ec2-user@34.203.206.54 'docker-compose run app npm test'
