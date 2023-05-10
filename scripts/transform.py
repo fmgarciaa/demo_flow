@@ -6,8 +6,5 @@ data = extract()
 
 def transform_data():
     df = pd.DataFrame(data)
-    df = df.dropna()
-    df = df.drop_duplicates()
-    df = df.reset_index(drop=True)
+    df = df.head(10)
     return df
-
