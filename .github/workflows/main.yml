@@ -13,9 +13,6 @@ jobs:
       - name: Clonar repositorio
         uses: actions/checkout@v2
         
-      - name: Eliminar clave del host SSH
-        run: ssh-keygen -R 34.203.206.54
-      
       - name: Iniciar instancia EC2
         run: |
           echo "${{ secrets.CLAVE_PRIVADA_EC2 }}" > key.pem
