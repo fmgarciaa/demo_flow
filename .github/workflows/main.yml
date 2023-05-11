@@ -26,7 +26,7 @@ jobs:
         run: |
           echo "${{ secrets.CLAVEPRIVADAEC2 }}" > key.pem
           chmod 600 key.pem
-          ssh -i key.pem Admin@34.203.206.54 'docker-compose down'
-          ssh -i key.pem Admin@34.203.206.54 'rm -rf /ruta/al/repo'
-          ssh -i key.pem Admin@34.203.206.54 'git clone https://github.com/fmgarciaa/demo_flow.git'
-          ssh -i key.pem Admin@34.203.206.54 'cd /ruta/al/repo && docker-compose up -d'
+          ssh -i key.pem Admin@54.167.10.55 'docker-compose down'
+          ssh -i key.pem Admin@54.167.10.55 'rm -rf /ruta/al/repo'
+          ssh -i key.pem Admin@54.167.10.55 'git clone https://github.com/fmgarciaa/demo_flow.git'
+          ssh -i key.pem Admin@54.167.10.55 'cd /ruta/al/repo && docker-compose up -d'
