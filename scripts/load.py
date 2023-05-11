@@ -1,6 +1,5 @@
 import os
 import boto3
-import pandas as pd
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -36,4 +35,4 @@ def save_dataframe_to_s3(dataframe, s3_bucket, s3_file_name):
     # Upload the file to the S3 bucket
     s3_client.upload_file(output_file, s3_bucket, s3_file_name)
 
-    print('CSV file uploaded to S3 successfully.')
+    print('CSV file uploaded to S3 successfully')

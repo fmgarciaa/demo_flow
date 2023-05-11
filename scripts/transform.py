@@ -7,4 +7,5 @@ data = extract()
 def transform_data():
     df = pd.DataFrame(data)
     df = df.head(10)
+    df.columns = ['column1', 'columns2']
     return df

@@ -6,5 +6,4 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/app
-    command: >
-      sh -c "python main.py && tail -f /dev/null"
+    command: sh -c "ls /app/**/*.py | entr -r sh -c 'python main.py'"
