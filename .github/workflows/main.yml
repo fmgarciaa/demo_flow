@@ -20,7 +20,7 @@ jobs:
       
       - name: Eliminar clave del host SSH
         run: |
-          ssh-keygen -R 34.203.206.54 >> $HOME/.ssh/known_hosts
+          ssh-keygen -R 54.167.10.55 >> $HOME/.ssh/known_hosts
 
       - name: Iniciar instancia EC2
         run: |
