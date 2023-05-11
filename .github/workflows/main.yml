@@ -27,6 +27,7 @@ jobs:
           echo "${{ secrets.CLAVEPRIVADAEC2 }}" > key.pem
           chmod 600 key.pem
           ssh -i key.pem ubuntu@54.167.10.55 'docker-compose down'
-          ssh -i key.pem ubuntu@54.167.10.55 'rm -rf /ruta/al/repo'
-          ssh -i key.pem ubuntu@54.167.10.55 'git clone https://github.com/fmgarciaa/demo_flow.git'
-          ssh -i key.pem ubuntu@54.167.10.55 'cd /ruta/al/repo && docker-compose up -d'
+          ssh -i key.pem ubuntu@54.167.10.55 'rm -rf /home/ubuntu/flow_repo'
+          ssh -i key.pem ubuntu@54.167.10.55 'mkdir /home/ubuntu/flow_repo'
+          ssh -i key.pem ubuntu@54.167.10.55 'git clone https://github.com/fmgarciaa/demo_flow.git /home/ubuntu/flow_repo'
+          ssh -i key.pem ubuntu@54.167.10.55 'cd /home/ubuntu/flow_repo && docker-compose up -d'
