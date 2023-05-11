@@ -1,29 +1,40 @@
-name: CI/CD para aplicación en Docker
+name: CI/CD counter app
 
 on:
   push:
-    branches:
-      - main
+    branches: [ master ]
 
 jobs:
-  deploy:
+#First we will see the application build or not , then we will deploy in EC2
+  build:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v2
-      
-      - name: Crear directorio .ssh y archivo known_hosts
-        run: |
-          mkdir -p $HOME/.ssh
-          touch $HOME/.ssh/known_hosts
+    - uses: actions/checkout@v2
+    
+    - name: Build the docker_compose
+      run: docker-compose up -d --build
 
-      - name: Iniciar instancia EC2
+  Deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2 
+      - name: Deploy in EC2
+        env:
+            PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
+            HOSTNAME : ${{ secrets.HOSTNAME  }}
+            USER_NAME : ${{ secrets.USER_NAME  }}
+            
         run: |
-          echo "${{ secrets.CLAVEPRIVADAEC2 }}" > key.pem
-          chmod 600 key.pem
-          ssh -i key.pem ubuntu@54.167.10.55 'docker-compose down'
-          ssh -i key.pem ubuntu@54.167.10.55 'rm -rf /home/ubuntu/flow_repo'
-          ssh -i key.pem ubuntu@54.167.10.55 'mkdir /home/ubuntu/flow_repo'
-          ssh -i key.pem ubuntu@54.167.10.55 'git clone https://github.com/fmgarciaa/demo_flow.git /home/ubuntu/flow_repo'
-          ssh -i key.pem ubuntu@54.167.10.55 'cd /home/ubuntu/flow_repo && docker-compose up -d'
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          
+            #Now we have got the access of EC2 and we will start the deploy .
+            cd /home/ubuntu/CounterApp &&
+            git checkout master &&
+            git fetch --all &&
+            git reset --hard origin/master &&
+            git pull origin master &&
+            docker-compose up --build 
