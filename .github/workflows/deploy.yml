@@ -32,7 +32,10 @@ jobs:
           
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -i private_key ubuntu@ec2-52-205-254-208.compute-1.amazonaws.com << EOF
+          ssh -i private_key "$USER_NAME"@"$HOSTNAME" << EOF
+            docker-compose down
+            rm -rf /home/ubuntu/demo_flow
+            mkdir /home/ubuntu/demo_flow
             cd /home/ubuntu/demo_flow
             git checkout main
             git fetch --all
